@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Certificate of Completion</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&family=Marck+Script&family=Mea+Culpa&display=swap");
+
+      body {
+        margin: 20px;
+        padding: 0;
+        background: #030d12;
+        position: relative;
+      }
+
+      .certificate-container {
+        width: 1170px;
+        margin: auto;
+        background: #030d12 url("/images/certificateBg.svg") no-repeat center;
+        background-size: cover;
+        padding: 48px;
+        position: relative;
+      }
+
+      /* Top-left Border */
+      .certificate-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 168px; /* Border height */
+        width: 60rem; /* Border width */
+        border-top: 1px solid #084952;
+        border-left: 1px solid #084952;
+      }
+
+      /* Bottom-right Border */
+      .certificate-container::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        height: 168px; /* Border height */
+        width: 60rem; /* Border width */
+        border-bottom: 1px solid #084952;
+        border-right: 1px solid #084952;
+      }
+
+      .certificate-inner {
+        border: 1px solid #31383b;
+        border-radius: 8px;
+        padding: 40px 112px;
+        color: white;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        background: rgba(3, 13, 18, 0.8);
+        position: relative;
+      }
+
+      .content-center {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .logo {
+        margin: 40px 0 12px 0;
+        width: 170px;
+      }
+
+      .certificate-title {
+        font-family: "Mea Culpa", cursive;
+        font-size: 3rem;
+        color: #afadad;
+        margin: 10px 0;
+      }
+
+      .course-title {
+        font-family: "Manrope", sans-serif;
+        font-size: 3rem;
+        font-weight: 700;
+        margin: 24px 0;
+        text-align: center;
+      }
+
+      .divider {
+        height: 2px;
+        background-color: #454444;
+        width: 80%;
+        margin: 16px 0;
+      }
+
+      .text-dark {
+        color: #afadad;
+        font-family: "Manrope", sans-serif;
+        font-size: 1.125rem;
+        margin: 8px 0;
+      }
+
+      .student-name {
+        font-family: "Marck Script", cursive;
+        font-size: 4.5rem;
+        color: #0e99ad;
+        width: 48rem;
+        text-align: center;
+        margin: 12px 0;
+      }
+
+      .date-section,
+      .director-section {
+        text-align: center;
+        margin: 8px 0;
+      }
+
+      .signature {
+        font-family: "Marck Script", cursive;
+        font-size: 1.875rem;
+        color: #0e99ad;
+        margin: 26.59px 0;
+      }
+
+      .certificate-info {
+        position: absolute;
+        top: 10px;
+        right: 30px;
+        text-align: right;
+        font-size: 12px;
+        color: #969292;
+      }
+
+      .verify-link {
+        position: absolute;
+        bottom: 10px;
+        left: 30px;
+        font-size: 12px;
+        color: white;
+      }
+
+      .border-top-right {
+        position: absolute;
+        top: 10px;
+        left: 0;
+        width: calc(100% - 1250px);
+        height: 1px;
+        background-color: #084952;
+      }
+
+      .verify-link {
+        position: absolute;
+        bottom: 10px;
+        left: 30px;
+        font-size: 12px;
+        color: white;
+      }
+
+      .border-top-right {
+        position: absolute;
+        top: 10px;
+        left: 0;
+        width: calc(100% - 1250px);
+        height: 1px;
+        background-color: #084952;
+      }
+
+      .border-bottom-left {
+        position: absolute;
+        bottom: 10px;
+        right: 0;
+        width: calc(100% - 1250px);
+        height: 1px;
+        background-color: #084952;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="certificate-container">
+      <div class="certificate-inner">
+        <div class="certificate-info">
+          Certificate No: <%= certificateId %>
+          <div class="border-top-right"></div>
+        </div>
+        <div class="content-center">
+          <img src="/images/logo-dark.svg" alt="Logo" class="logo" />
+          <h3 class="certificate-title">Certificate of Completion</h3>
+          <h1 class="course-title"><%= courseTitle %></h1>
+          <div class="divider"></div>
+          <p class="text-dark">This certificate acknowledges that</p>
+          <h2 class="student-name"><%= firstName %> <%= lastName %></h2>
+          <p class="text-dark">
+            has successfully completed the course by passing all requirements.
+          </p>
+          <div class="divider"></div>
+          <div class="date-section">
+            <p class="text-dark">Issue Date</p>
+            <p style="font-family: 'Manrope', sans-serif; color: white">
+              <%= issueDate %>
+            </p>
+          </div>
+          <div class="divider" style="width: 40%"></div>
+          <div class="director-section">
+            <p class="text-dark">Director</p>
+            <p style="font-family: 'Manrope', sans-serif; color: white">
+              Sudhanshu Kumar
+            </p>
+          </div>
+          <div class="signature">Sudhanshu Kumar</div>
+        </div>
+        <div class="verify-container">
+          <a
+            href="https://euron.one/certificate/<%= certificateId %>"
+            class="verify-link"
+            style="text-decoration: none"
+            >Verify Certificate</a
+          >
+          <div class="border-bottom-left"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
