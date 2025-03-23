@@ -18,13 +18,31 @@ const certificateData = {
     directorName: "Sudhanshu Kumar"
 };
 
+// Import resume sample data
+const resumeData = require('./data/sampleResumeData');
+// Import cover letter sample data
+const coverLetterData = require('./data/sampleCoverLetterData');
+
 // Route to display certificate
 app.get('/certificate', (req, res) => {
     res.render('certificate', certificateData);
 });
 
+// Route to display resume template
+app.get('/resume', (req, res) => {
+    res.render('resume-template-1', { data: resumeData });
+});
+
+// Route to display cover letter
+app.get('/cover-letter', (req, res) => {
+    res.render('cover-letter-template-1', { data: coverLetterData });
+});
+
 // Start server
-const PORT = 3000;
+const PORT = 3001;
 app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}/certificate`);
+    console.log(`Server running at http://localhost:${PORT}`);
+    console.log(`- Certificate: http://localhost:${PORT}/certificate`);
+    console.log(`- Resume: http://localhost:${PORT}/resume`);
+    console.log(`- Cover Letter: http://localhost:${PORT}/cover-letter`);
 });
