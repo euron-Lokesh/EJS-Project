@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Cover Letter</title>
+    <!-- Add Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* A4 page setup */
+        @page {
+            size: A4;
+            margin: 15mm; /* Add margin to all sides of the page when printing */
+        }
+        @media print {
+            html, body {
+                width: 210mm;
+                height: 297mm;
+                margin: 0;
+                padding: 0;
+            }
+            .container {
+                width: 100%;
+                padding: 6mm; /* Add padding inside the container */
+                margin: 0 auto;
+                box-shadow: none;
+            }
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Times New Roman', serif;
+        }
+        body {
+            background: #fff;
+            color: #000;
+            line-height: 1.5; 
+            font-size: 12px; 
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px; 
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 25px; 
+        }
+        .name {
+            font-size: 24px; 
+            font-weight: bold;
+            margin-bottom: 10px; 
+            color: #000; /* Changed from #003366 to black */
+        }
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap; /* Allow wrapping if too many items */
+            font-size: 11px; 
+            margin: 10px 0 20px 0;
+            gap: 20px; /* Space between items */
+        }
+        .contact-info span {
+            display: flex;
+            align-items: center;
+        }
+        .contact-info i {
+            margin-right: 5px;
+            width: 14px; /* Fixed width for icons to align text */
+            text-align: center;
+        }
+        .contact-info a {
+            text-decoration: none;
+            color: #000;
+            font-weight: 500;
+        }
+        .date {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        .recipient {
+            margin-bottom: 20px;
+        }
+        .recipient-name {
+            font-weight: bold;
+        }
+        .salutation {
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        .letter-body {
+            text-align: justify;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .paragraph {
+            margin-bottom: 15px;
+            text-indent: 30px;
+        }
+        .closing {
+            margin-bottom: 5px;
+        }
+        .signature {
+            margin-top: 5px;
+        }
+        .signature-name {
+            font-weight: bold;
+        }
+        .job-title {
+            margin-top: 5px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <div class="name"><%= data.coverLetter.personalInfo.name %></div>
+            <div class="contact-info">
+                <% 
+                // Helper function to determine the icon class based on URL
+                function getIconForUrl(url) {
+                  if (!url) return 'fas fa-globe';
+                  
+                  const urlLower = url.toLowerCase();
+                  if (urlLower.includes('linkedin.com')) return 'fab fa-linkedin';
+                  if (urlLower.includes('github.com')) return 'fab fa-github';
+                  if (urlLower.includes('leetcode.com')) return 'fas fa-code';
+                  if (urlLower.includes('medium.com')) return 'fab fa-medium';
+                  if (urlLower.includes('twitter.com') || urlLower.includes('x.com')) return 'fab fa-twitter';
+                  if (urlLower.includes('facebook.com')) return 'fab fa-facebook';
+                  if (urlLower.includes('instagram.com')) return 'fab fa-instagram';
+                  if (urlLower.includes('youtube.com')) return 'fab fa-youtube';
+                  if (urlLower.includes('stackoverflow.com')) return 'fab fa-stack-overflow';
+                  if (urlLower.includes('codepen.io')) return 'fab fa-codepen';
+                  if (urlLower.includes('codechef.com')) return 'fas fa-code';
+                  if (urlLower.includes('codeforces.com')) return 'fas fa-code';
+                  if (urlLower.includes('hackerearth.com')) return 'fas fa-code';
+                  if (urlLower.includes('hackerrank.com')) return 'fas fa-code';
+                  return 'fas fa-globe';
+                }
+                
+                // Helper function to get display text for the link
+                function getDisplayText(url) {
+                  if (!url) return url;
+                  
+                  try {
+                    const urlLower = url.toLowerCase();
+                    
+                    // Special cases for common platforms
+                    if (urlLower.includes('linkedin.com')) return 'LinkedIn';
+                    if (urlLower.includes('github.com')) return 'GitHub';
+                    if (urlLower.includes('leetcode.com')) return 'LeetCode';
+                    if (urlLower.includes('twitter.com') || urlLower.includes('x.com')) return 'Twitter';
+                    if (urlLower.includes('medium.com')) return 'Medium';
+                    if (urlLower.includes('facebook.com')) return 'Facebook';
+                    if (urlLower.includes('instagram.com')) return 'Instagram';
+                    if (urlLower.includes('youtube.com')) return 'YouTube';
+                    if (urlLower.includes('stackoverflow.com')) return 'Stack Overflow';
+                    if (urlLower.includes('codepen.io')) return 'CodePen';
+                    if (urlLower.includes('codechef.com')) return 'CodeChef';
+                    if (urlLower.includes('codeforces.com')) return 'Codeforces';
+                    if (urlLower.includes('hackerearth.com')) return 'HackerEarth';
+                    if (urlLower.includes('hackerrank.com')) return 'HackerRank';
+                    if (urlLower.includes('portfolio')) return 'Portfolio';
+                    
+                    // Default: show domain
+                    const domain = new URL(url).hostname;
+                    return domain.replace('www.', '');
+                  } catch (e) {
+                    return url;
+                  }
+                }
+                %>
+                <span><i class="fas fa-envelope"></i> <%= data.coverLetter.personalInfo.email %></span>
+                <span><i class="fas fa-phone"></i> <%= data.coverLetter.personalInfo.phone %></span>
+                
+                <% if (data.coverLetter.personalInfo.links && data.coverLetter.personalInfo.links.length > 0) { %>
+                    <% data.coverLetter.personalInfo.links.forEach(link => { %>
+                        <span>
+                            <i class="<%= getIconForUrl(link) %>"></i>
+                            <a href="<%= link %>" target="_blank"><%= getDisplayText(link) %></a>
+                        </span>
+                    <% }); %>
+                <% } %>
+            </div>
+        </div>
+
+        <!-- Date -->
+        <div class="date">
+            <%= data.coverLetter.date %>
+        </div>
+
+        <!-- Recipient Information -->
+        <div class="recipient">
+            <% if (data.coverLetter.recipient && data.coverLetter.recipient.title) { %>
+                <div><%= data.coverLetter.recipient.title %></div>
+            <% } %>
+        </div>
+
+        <!-- Letter Body -->
+        <div class="letter-body">
+            <% data.coverLetter.body.paragraphs.forEach(paragraph => { %>
+                <div class="paragraph"><%= paragraph %></div>
+            <% }) %>
+        </div>
+
+        <!-- Closing -->
+        <div class="closing">
+            <%= data.coverLetter.closing %>,
+        </div>
+
+        <!-- Signature -->
+        <div class="signature">
+            <div class="signature-name"><%= data.coverLetter.personalInfo.name %></div>
+            <div class="job-title"><%= data.coverLetter.personalInfo.title %></div>
+        </div>
+    </div>
+</body>
+</html> 
