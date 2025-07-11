@@ -30,7 +30,17 @@ app.get('/certificate', (req, res) => {
 
 // Route to display resume template
 app.get('/resume', (req, res) => {
-    res.render('resume-template-1', { data: resumeData });
+    res.render('classic-resume-template', { data: resumeData });
+});
+
+// Route to display resume template 2
+app.get('/resume-2', (req, res) => {
+    res.render('multi-column-resume-template', { data: resumeData });
+});
+
+// Route to display resume template 3
+app.get('/resume-3', (req, res) => {
+    res.render('executive-resume-template', { data: resumeData });
 });
 
 // Route to display cover letter
@@ -43,6 +53,7 @@ const PORT = 3001;
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
     console.log(`- Certificate: http://localhost:${PORT}/certificate`);
-    console.log(`- Resume: http://localhost:${PORT}/resume`);
+    console.log(`- Resume Template 1: http://localhost:${PORT}/resume`);
+    console.log(`- Resume Template 2: http://localhost:${PORT}/resume-2`);
     console.log(`- Cover Letter: http://localhost:${PORT}/cover-letter`);
 });
