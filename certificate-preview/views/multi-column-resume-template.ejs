@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Column Resume</title>
+    <!-- Add Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Add Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* A4 page setup */
+        @page {
+            size: A4;
+            margin: 15mm;
+        }
+        @media print {
+            html, body {
+                width: 210mm;
+                height: 297mm;
+                margin: 0;
+                padding: 0;
+            }
+            .container {
+                width: 100%;
+                height: 100%;
+                box-shadow: none;
+                margin: 0;
+            }
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Lato', 'Arial', sans-serif;
+            line-height: 1.4;
+            color: #333;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        /* Left Sidebar */
+        .sidebar {
+            width: 35%;
+            background: #1B3042;
+            padding: 30px 25px;
+            color: #ecf0f1;
+        }
+        
+        .sidebar-header {
+            margin-bottom: 30px;
+        }
+        
+        .name {
+            font-size: 28px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 5px;
+            line-height: 1.1;
+        }
+        
+        .job-title {
+            font-size: 16px;
+            color: #eaf0f4;
+            font-style: italic;
+            margin-bottom: 25px;
+            line-height: 1.2;
+            font-weight: 400; /* Lighter than name */
+        }
+        
+        .contact-info {
+            margin-bottom: 30px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 12px;
+            word-break: break-word;
+        }
+        
+        .contact-item i {
+            width: 18px;
+            color: #3498db;
+            margin-right: 10px;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        
+        .contact-item a {
+            color: #ecf0f1;
+            text-decoration: none;
+        }
+        
+        .contact-item a:hover {
+            color: #3498db;
+        }
+        
+        .sidebar-section {
+            margin-bottom: 30px;
+        }
+        
+        .sidebar-section h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 12px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #0664a3;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .profile-text {
+            font-size: 12px;
+            line-height: 1.5;
+            text-align: justify;
+        }
+        
+        .skills-content {
+            font-size: 12px;
+            line-height: 1.5;
+        }
+        
+        .skills-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 10px;
+        }
+        
+        .skills-list li {
+            position: relative;
+            padding-left: 18px;
+            margin-bottom: 0;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        
+        .skills-list li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #0664a3;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .achievements-list {
+            list-style: none;
+        }
+        
+        .achievement-item {
+            margin-bottom: 12px;
+        }
+        
+        .achievement-name {
+            font-weight: 600;
+            font-size: 13px;
+            color: #ffffff;
+            margin-bottom: 2px;
+        }
+        
+        .achievement-date {
+            font-size: 11px;
+            color: #bdc3c7;
+            font-style: italic;
+        }
+        
+        /* Main Content */
+        .main-content {
+            width: 65%;
+            padding: 40px 30px;
+            background: #fff;
+        }
+        
+        .main-section {
+            margin-bottom: 28px;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1B3042;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #1B3042;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+        
+        .experience-item {
+            margin-bottom: 22px;
+        }
+        
+        .experience-header {
+            margin-bottom: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        
+        .company-name {
+            font-size: 17px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 2px;
+        }
+        
+        .job-position {
+            font-size: 15px;
+            color: #444;
+            font-style: italic;
+            margin-bottom: 4px;
+            font-weight: 700;
+        }
+        
+        .duration-location {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        
+        .experience-points {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .experience-points li {
+            position: relative;
+            padding-left: 18px;
+            margin-bottom: 5px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        
+        .experience-points li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #1B3042;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .education-item {
+            margin-bottom: 18px;
+        }
+        
+        .education-header {
+            margin-bottom: 6px;
+        }
+        
+        .institution-name {
+            font-size: 17px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 2px;
+        }
+        
+        .degree-name {
+            font-size: 15px;
+            color: #444;
+            font-style: italic;
+            margin-bottom: 4px;
+            font-weight: 700;
+        }
+        
+        .education-duration {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .education-details {
+            font-size: 13px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* Education in Sidebar */
+        .sidebar .education-item {
+            margin-bottom: 15px;
+        }
+        .sidebar .education-header {
+            margin-bottom: 4px;
+        }
+        .sidebar .institution-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 2px;
+        }
+        .sidebar .degree-name {
+            font-size: 12px;
+            color: #eaf0f4;
+            font-style: italic;
+            margin-bottom: 3px;
+            font-weight: 400;
+        }
+        .sidebar .education-duration {
+            font-size: 11px;
+            color: #bdc3c7;
+            margin-bottom: 4px;
+        }
+        .sidebar .education-details {
+            font-size: 11px;
+            color: #bdc3c7;
+            line-height: 1.5;
+        }
+        
+        .project-item {
+            margin-bottom: 18px;
+        }
+        
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        
+        .project-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        .project-duration {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .project-description {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="name"><%= data.updatedResume.personalInfo.name %></h1>
+                <p class="job-title">
+                    <% if (data.updatedResume.personalInfo.jobTitle) { %>
+                        <%= data.updatedResume.personalInfo.jobTitle %>
+                    <% } else { %>
+                        Professional
+                    <% } %>
+                </p>
+            </div>
+            
+            <!-- Contact Information -->
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span><%= data.updatedResume.personalInfo.email %></span>
+                </div>
+                
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span><%= data.updatedResume.personalInfo.phone %></span>
+                </div>
+                
+                <% 
+                function getIconForUrl(url) {
+                    if (!url) return 'fas fa-globe';
+                    
+                    const urlLower = url.toLowerCase();
+                    if (urlLower.includes('linkedin.com')) return 'fab fa-linkedin';
+                    if (urlLower.includes('github.com')) return 'fab fa-github';
+                    if (urlLower.includes('leetcode.com')) return 'fas fa-code';
+                    if (urlLower.includes('medium.com')) return 'fab fa-medium';
+                    if (urlLower.includes('twitter.com') || urlLower.includes('x.com')) return 'fab fa-twitter';
+                    if (urlLower.includes('facebook.com')) return 'fab fa-facebook';
+                    if (urlLower.includes('instagram.com')) return 'fab fa-instagram';
+                    if (urlLower.includes('youtube.com')) return 'fab fa-youtube';
+                    if (urlLower.includes('stackoverflow.com')) return 'fab fa-stack-overflow';
+                    if (urlLower.includes('codepen.io')) return 'fab fa-codepen';
+                    if (urlLower.includes('codechef.com')) return 'fas fa-code';
+                    if (urlLower.includes('codeforces.com')) return 'fas fa-code';
+                    if (urlLower.includes('hackerearth.com')) return 'fas fa-code';
+                    if (urlLower.includes('hackerrank.com')) return 'fas fa-code';
+                    return 'fas fa-globe';
+                }
+                
+                function getDisplayText(url) {
+                    if (url.includes('linkedin.com')) return 'LinkedIn';
+                    if (url.includes('github.com')) return 'GitHub';
+                    if (url.includes('leetcode.com')) return 'LeetCode';
+                    if (url.includes('twitter.com') || url.includes('x.com')) return 'Twitter';
+                    
+                    try {
+                        const domain = new URL(url).hostname.replace('www.', '');
+                        return domain.split('.')[0].charAt(0).toUpperCase() + domain.split('.')[0].slice(1);
+                    } catch(e) {
+                        return 'Website';
+                    }
+                }
+                
+                if (data.updatedResume.personalInfo.links && 
+                    data.updatedResume.personalInfo.links.length > 0) {
+                    data.updatedResume.personalInfo.links.forEach(url => {
+                %>
+                <div class="contact-item">
+                    <i class="<%= getIconForUrl(url) %>"></i>
+                    <a href="<%= url %>" target="_blank"><%= getDisplayText(url) %></a>
+                </div>
+                <% 
+                    });
+                }
+                %>
+            </div>
+            
+            <!-- Skills Section -->
+            <div class="sidebar-section">
+                <h3>Skills</h3>
+                <div class="skills-content">
+                    <% if (data.updatedResume.skills && data.updatedResume.skills.length > 0) { %>
+                    <ul class="skills-list">
+                        <% data.updatedResume.skills.forEach(skill => { %>
+                        <li><%= skill %></li>
+                        <% }); %>
+                    </ul>
+                    <% } else { %>
+                    <ul class="skills-list">
+                        <li>JavaScript</li>
+                        <li>TypeScript</li>
+                        <li>React.js</li>
+                        <li>React Native</li>
+                        <li>Next.js</li>
+                        <li>Node.js</li>
+                        <li>HTML5</li>
+                        <li>CSS3</li>
+                        <li>Tailwind CSS</li>
+                        <li>Material UI</li>
+                        <li>Redux</li>
+                        <li>Context API</li>
+                        <li>Git</li>
+                        <li>Version Control</li>
+                        <li>npm</li>
+                        <li>Webpack</li>
+                        <li>Babel</li>
+                        <li>Build Tools</li>
+                    </ul>
+                    <% } %>
+                </div>
+            </div>
+            
+            <!-- Education Section -->
+            <div class="sidebar-section">
+                <h3>Education</h3>
+                <% data.updatedResume.education.forEach(edu => { %>
+                <div class="education-item">
+                    <div class="education-header">
+                        <div class="institution-name"><%= edu.institution %></div>
+                        <div class="degree-name"><%= edu.degree %></div>
+                        <div class="education-duration"><%= edu.duration %> | <%= edu.location %></div>
+                    </div>
+                    <% if (edu.details) { %>
+                    <div class="education-details"><%= edu.details %></div>
+                    <% } %>
+                </div>
+                <% }) %>
+            </div>
+
+            <!-- Achievements Section -->
+            <% if (data.updatedResume.achievements && data.updatedResume.achievements.length > 0) { %>
+            <div class="sidebar-section">
+                <h3>Achievements</h3>
+                <ul class="achievements-list">
+                    <% data.updatedResume.achievements.forEach(achievement => { %>
+                    <li class="achievement-item">
+                        <div class="achievement-name"><%= achievement.name %></div>
+                        <% if (achievement.date) { %>
+                        <div class="achievement-date"><%= achievement.date %></div>
+                        <% } %>
+                    </li>
+                    <% }) %>
+                </ul>
+            </div>
+            <% } %>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Profile Section -->
+            <div class="main-section">
+                <h2 class="section-title">Profile</h2>
+                <p style="font-size: 14px; line-height: 1.6; color: #555; text-align: justify;"><%= data.updatedResume.summary %></p>
+            </div>
+            
+            <!-- Experience Section -->
+            <% if (data.updatedResume.experience && data.updatedResume.experience.length > 0) { %>
+            <div class="main-section">
+                <h2 class="section-title">Experience</h2>
+                <% data.updatedResume.experience.forEach(exp => { %>
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div class="company-name"><%= exp.companyName %></div>
+                        <div class="duration-location"><%= exp.duration %></div>
+                    </div>
+                    <div class="job-position"><%= exp.designation %></div>
+                    <ul class="experience-points">
+                        <% exp.description.forEach(desc => { %>
+                        <li><%= desc.points %></li>
+                        <% }) %>
+                    </ul>
+                </div>
+                <% }) %>
+            </div>
+            <% } %>
+            
+            <!-- Projects Section -->
+            <% if (data.updatedResume.projects && data.updatedResume.projects.length > 0) { %>
+            <div class="main-section">
+                <h2 class="section-title">Projects</h2>
+                <% data.updatedResume.projects.forEach(project => { %>
+                <div class="project-item">
+                    <div class="project-header">
+                        <span class="project-name"><%= project.name %></span>
+                        <span class="project-duration"><%= project.duration %></span>
+                    </div>
+                    <p class="project-description"><%= project.description %></p>
+                </div>
+                <% }) %>
+            </div>
+            <% } %>
+            
+            
+        </div>
+    </div>
+</body>
+</html>
