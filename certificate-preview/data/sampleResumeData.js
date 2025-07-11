@@ -62,6 +62,12 @@ module.exports = {
         institution: "University of Technology",
         duration: "2014-2018",
         location: "San Francisco, CA"
+      },
+      {
+        degree: "Bachelor of Science in Computer Science",
+        institution: "University of Technology",
+        duration: "2014-2018",
+        location: "San Francisco, CA"
       }
     ]
   }
