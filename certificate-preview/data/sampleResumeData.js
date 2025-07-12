@@ -1,14 +1,14 @@
 module.exports = {
   updatedResume: {
     personalInfo: {
-      name: "Lokesh Dwivedi",
-      email: "lokeshdwivedi2002@gmail.com",
-      phone: "+91 9876543210",
+      name: "Andrew Sullivian",
+      email: "andrew.sullivian@gmail.com",
+      phone: "+91 8838484848",
       links: [
-        "https://linkedin.com/in/lokesh-dwivedi-2002",
-        "https://github.com/lokesh-dwivedi",
-        "https://leetcode.com/lokesh-dwivedi",
-        "https://portfolio.lokeshdwivedi.com",
+        "https://linkedin.com/in/andrew-sullivian",
+        "https://github.com/andrew-sullivian",
+        "https://leetcode.com/andrew-sullivian",
+        "https://portfolio.andrew-sullivian.com",
       ]
     },
     summary: "Frontend Developer with 2.5 years of experience specializing in scalable web applications, reusable components, and performance optimization using React.js, Next.js, and React Native. Expertise in TypeScript, JavaScript, Tailwind CSS, and Material-UI, with a strong focus on responsive design and user experience. Proven ability to build AI-integrated interfaces, learning management systems, and cross-platform mobile apps, integrating RESTful APIs for seamless functionality.",
