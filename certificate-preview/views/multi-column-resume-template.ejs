@@ -14,7 +14,7 @@
         /* A4 page setup */
         @page {
             size: A4;
-            margin: 15mm;
+            margin: 0;
         }
         @media print {
             html, body {
@@ -186,19 +186,19 @@
         /* Main Content */
         .main-content {
             width: 65%;
-            padding: 40px 30px;
+            padding: 30px 25px;
             background: #fff;
         }
         
         .main-section {
-            margin-bottom: 28px;
+            margin-bottom: 20px;
         }
         
         .section-title {
             font-size: 20px;
             font-weight: 700;
             color: #1B3042;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             padding-bottom: 8px;
             border-bottom: 2px solid #1B3042;
             text-transform: uppercase;
@@ -206,7 +206,7 @@
         }
         
         .experience-item {
-            margin-bottom: 22px;
+            margin-bottom: 15px;
         }
         
         .experience-header {
@@ -326,7 +326,7 @@
         }
         
         .project-item {
-            margin-bottom: 18px;
+            margin-bottom: 15px;
         }
         
         .project-header {
@@ -361,8 +361,8 @@
             <div class="sidebar-header">
                 <h1 class="name"><%= data.updatedResume.personalInfo.name %></h1>
                 <p class="job-title">
-                    <% if (data.updatedResume.personalInfo.jobTitle) { %>
-                        <%= data.updatedResume.personalInfo.jobTitle %>
+                    <% if (data.updatedResume.personalInfo.title) { %>
+                        <%= data.updatedResume.personalInfo.title %>
                     <% } else { %>
                         Professional
                     <% } %>
@@ -522,7 +522,7 @@
                     <div class="job-position"><%= exp.designation %></div>
                     <ul class="experience-points">
                         <% exp.description.forEach(desc => { %>
-                        <li><%= desc.points %></li>
+                        <li><%= desc.point %></li>
                         <% }) %>
                     </ul>
                 </div>
@@ -540,7 +540,11 @@
                         <span class="project-name"><%= project.name %></span>
                         <span class="project-duration"><%= project.duration %></span>
                     </div>
-                    <p class="project-description"><%= project.description %></p>
+                    <ul class="experience-points">
+                        <% project.description.forEach(desc => { %>
+                        <li><%= desc.point %></li>
+                        <% }) %>
+                    </ul>
                 </div>
                 <% }) %>
             </div>
