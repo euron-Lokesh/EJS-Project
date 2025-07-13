@@ -16,18 +16,40 @@
             size: A4;
             margin: 0;
         }
+        
         @media print {
             html, body {
                 width: 210mm;
-                height: 297mm;
+                height: auto;
                 margin: 0;
                 padding: 0;
+                font-size: 12pt;
             }
             .container {
-                width: 100%;
-                height: 100%;
+                width: 210mm;
+                height: auto;
                 box-shadow: none;
                 margin: 0;
+                max-width: none;
+            }
+            .sidebar {
+                width: 73.5mm; /* 35% of 210mm */
+                height: auto;
+                min-height: 297mm;
+                float: left;
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            .main-content {
+                width: 136.5mm; /* 65% of 210mm */
+                height: auto;
+                min-height: 297mm;
+                float: right;
+                page-break-inside: auto;
+                break-inside: auto;
+            }
+            .page-break {
+                page-break-before: always;
             }
         }
         
@@ -40,17 +62,15 @@
         body {
             font-family: 'Lato', 'Arial', sans-serif;
             line-height: 1.4;
-            color: #333;
-            background: #f5f5f5;
+            background: white;
         }
         
         .container {
             max-width: 800px;
             margin: 0 auto;
-            min-height: 100vh;
             display: flex;
-            background: white;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            min-height: 100vh;
+            position: relative;
         }
         
         /* Left Sidebar */
@@ -59,6 +79,20 @@
             background: #1B3042;
             padding: 30px 25px;
             color: #ecf0f1;
+            position: relative;
+            min-height: 100vh;
+        }
+        
+        /* Create a pseudo-element for extended background */
+        .sidebar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 200vh; /* Extended height to cover multiple pages */
+            background: #1B3042;
+            z-index: -1;
         }
         
         .sidebar-header {
@@ -79,7 +113,7 @@
             font-style: italic;
             margin-bottom: 25px;
             line-height: 1.2;
-            font-weight: 400; /* Lighter than name */
+            font-weight: 400;
         }
         
         .contact-info {
@@ -159,7 +193,7 @@
             left: 0;
             color: #0664a3;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 11px;
         }
         
         .achievements-list {
@@ -188,25 +222,29 @@
             width: 65%;
             padding: 30px 25px;
             background: #fff;
+            position: relative;
+            min-height: 100vh;
         }
         
         .main-section {
-            margin-bottom: 20px;
+            margin-bottom: 14px;
         }
         
         .section-title {
-            font-size: 20px;
+            font-size: 17px;
             font-weight: 700;
             color: #1B3042;
-            margin-bottom: 15px;
+            margin-bottom: 5px;
             padding-bottom: 8px;
-            border-bottom: 2px solid #1B3042;
+            border-bottom: 1.5px solid #1B3042;
             text-transform: uppercase;
             letter-spacing: 1.5px;
         }
         
         .experience-item {
             margin-bottom: 15px;
+            page-break-inside: avoid;
+            break-inside: avoid;
         }
         
         .experience-header {
@@ -217,23 +255,24 @@
         }
         
         .company-name {
-            font-size: 17px;
-            font-weight: 700;
+            font-size: 14px;
+            font-weight: 500;
             color: #333;
             margin-bottom: 2px;
         }
         
         .job-position {
-            font-size: 15px;
+            font-size: 13px;
             color: #444;
             font-style: italic;
+            font-family: 'Times New Roman', Times, serif;
             margin-bottom: 4px;
-            font-weight: 700;
+            font-weight: 400;
         }
         
         .duration-location {
             font-size: 12px;
-            color: #666;
+            color: #333;
             margin-bottom: 8px;
         }
         
@@ -246,8 +285,9 @@
             position: relative;
             padding-left: 18px;
             margin-bottom: 5px;
-            font-size: 13px;
+            font-size: 12px;
             line-height: 1.6;
+            color: #555;
         }
         
         .experience-points li:before {
@@ -256,7 +296,7 @@
             left: 0;
             color: #1B3042;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 11px;
         }
         
         .education-item {
@@ -278,8 +318,9 @@
             font-size: 15px;
             color: #444;
             font-style: italic;
+            font-family: 'Times New Roman', Times, serif;
             margin-bottom: 4px;
-            font-weight: 700;
+            font-weight: 600;
         }
         
         .education-duration {
@@ -327,6 +368,8 @@
         
         .project-item {
             margin-bottom: 15px;
+            page-break-inside: avoid;
+            break-inside: avoid;
         }
         
         .project-header {
@@ -337,20 +380,93 @@
         }
         
         .project-name {
-            font-size: 15px;
-            font-weight: 700;
+            font-size: 14px;
+            font-weight: 500;
             color: #333;
         }
         
         .project-duration {
             font-size: 12px;
-            color: #666;
+            color: #333;
         }
         
         .project-description {
             font-size: 13px;
             line-height: 1.6;
             color: #555;
+        }
+
+        /* Additional styles for better multi-page support */
+        @media print {
+            .sidebar, .main-content {
+                overflow: visible !important;
+            }
+            
+            .sidebar {
+                position: absolute;
+                left: 0;
+                top: 0;
+                height: auto;
+                min-height: 100%;
+            }
+            
+            .sidebar::after {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 73.5mm;
+                height: 100vh;
+                background: #1B3042;
+                z-index: -1;
+            }
+            
+            .main-content {
+                position: absolute;
+                right: 0;
+                top: 10;
+                height: auto;
+                min-height: 100%;
+            }
+            
+            /* Ensure proper column layout on all pages */
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            
+            .container {
+                position: relative;
+                width: 210mm;
+                height: auto;
+                display: block;
+            }
+            
+            /* Prevent experience and project items from breaking across pages */
+            .experience-item, .project-item {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+            
+            /* Optional: Add some preference for keeping sections together */
+            .main-section {
+                page-break-inside: auto;
+                break-inside: auto;
+            }
+            
+            /* Ensure section titles stay with their content */
+            .section-title {
+                page-break-after: avoid;
+                break-after: avoid;
+            }
+            
+            /* Ensure consistent padding on all pages */
+            /* .sidebar {
+                padding-top: 30px !important;
+            }
+            
+            .main-content {
+                padding-top: 30px !important;
+            } */
         }
     </style>
 </head>
@@ -432,39 +548,18 @@
             </div>
             
             <!-- Skills Section -->
+            <% if (data.updatedResume.skills && Array.isArray(data.updatedResume.skills) && data.updatedResume.skills.length > 0) { %>
             <div class="sidebar-section">
                 <h3>Skills</h3>
                 <div class="skills-content">
-                    <% if (data.updatedResume.skills && data.updatedResume.skills.length > 0) { %>
                     <ul class="skills-list">
                         <% data.updatedResume.skills.forEach(skill => { %>
                         <li><%= skill %></li>
                         <% }); %>
                     </ul>
-                    <% } else { %>
-                    <ul class="skills-list">
-                        <li>JavaScript</li>
-                        <li>TypeScript</li>
-                        <li>React.js</li>
-                        <li>React Native</li>
-                        <li>Next.js</li>
-                        <li>Node.js</li>
-                        <li>HTML5</li>
-                        <li>CSS3</li>
-                        <li>Tailwind CSS</li>
-                        <li>Material UI</li>
-                        <li>Redux</li>
-                        <li>Context API</li>
-                        <li>Git</li>
-                        <li>Version Control</li>
-                        <li>npm</li>
-                        <li>Webpack</li>
-                        <li>Babel</li>
-                        <li>Build Tools</li>
-                    </ul>
-                    <% } %>
                 </div>
             </div>
+            <% } %>
             
             <!-- Education Section -->
             <div class="sidebar-section">
@@ -506,7 +601,7 @@
             <!-- Profile Section -->
             <div class="main-section">
                 <h2 class="section-title">Profile</h2>
-                <p style="font-size: 14px; line-height: 1.6; color: #555; text-align: justify;"><%= data.updatedResume.summary %></p>
+                <p style="font-size: 12px; line-height: 1.5; color: #555; text-align: justify;"><%= data.updatedResume.summary %></p>
             </div>
             
             <!-- Experience Section -->
@@ -535,10 +630,10 @@
             <div class="main-section">
                 <h2 class="section-title">Projects</h2>
                 <% data.updatedResume.projects.forEach(project => { %>
-                <div class="project-item">
-                    <div class="project-header">
-                        <span class="project-name"><%= project.name %></span>
-                        <span class="project-duration"><%= project.duration %></span>
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div class="company-name"><%= project.name %></div>
+                        <div class="duration-location"><%= project.duration %></div>
                     </div>
                     <ul class="experience-points">
                         <% project.description.forEach(desc => { %>
@@ -549,8 +644,6 @@
                 <% }) %>
             </div>
             <% } %>
-            
-            
         </div>
     </div>
 </body>
