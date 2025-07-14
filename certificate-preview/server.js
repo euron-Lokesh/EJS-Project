@@ -48,6 +48,11 @@ app.get('/cover-letter', (req, res) => {
     res.render('cover-letter-template-1', { data: coverLetterData });
 });
 
+// Route to display modern resume template
+app.get('/modern-resume', (req, res) => {
+    res.render('modern-resume', { data: resumeData });
+});
+
 // Start server
 const PORT = 3001;
 app.listen(PORT, () => {
