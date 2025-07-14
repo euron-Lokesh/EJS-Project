@@ -12,6 +12,9 @@ module.exports = {
       ]
     },
     summary: "Frontend Developer with 2.5 years of experience specializing in scalable web applications, reusable components, and performance optimization using React.js, Next.js, and React Native. Expertise in TypeScript, JavaScript, Tailwind CSS, and Material-UI, with a strong focus on responsive design and user experience. Proven ability to build AI-integrated interfaces, learning management systems, and cross-platform mobile apps, integrating RESTful APIs for seamless functionality.",
+    skills: [
+      "React.js","Next.js","React Native","TypeScript","JavaScript","Tailwind CSS","Material-UI","Redux","Context API","Git","npm","Webpack","Babel"
+    ],
     experience: [
       {
         companyName: "Tech Solutions Inc.",
@@ -37,14 +40,14 @@ module.exports = {
     projects: [
       {
         name: "E-commerce Platform",
-        duration: "6 months",
-        description: "Built a full-featured e-commerce platform with React, Node.js, and MongoDB. Implemented payment processing, user authentication, and inventory management."
+        duration: "Jan 2020 - Dec 2020",
+        description: [
+          { points: "Developed responsive web applications using React.js and Redux" },
+          { points: "Collaborated with UX team to implement design systems" },
+          { points: "Reduced load time by 30% through code optimization" }
+        ],
       },
-      {
-        name: "Task Management App",
-        duration: "3 months",
-        description: "Created a responsive task management application with drag-and-drop functionality using React.js and Context API for state management."
-      }
+      
     ],
     achievements: [
       {
@@ -60,13 +63,13 @@ module.exports = {
       {
         degree: "Bachelor of Science in Computer Science",
         institution: "University of Technology",
-        duration: "2014-2018",
+        duration: "Jan 2014 - Dec 2018",
         location: "San Francisco, CA"
       },
       {
         degree: "Bachelor of Science in Computer Science",
         institution: "University of Technology",
-        duration: "2014-2018",
+        duration: "Jan 2014 - Dec 2018",
         location: "San Francisco, CA"
       }
     ]
