@@ -236,7 +236,58 @@
                         </span>
                     <% } %>
                     
-                    <% if (data.updatedResume.personalInfo.linkedin) { %>
+                    <% 
+                    // Helper function to determine the icon class based on URL
+                    function getIconForUrl(url) {
+                      if (!url) return 'fas fa-globe';
+                      
+                      const urlLower = url.toLowerCase();
+                      if (urlLower.includes('linkedin.com')) return 'fab fa-linkedin';
+                      if (urlLower.includes('github.com')) return 'fab fa-github';
+                      if (urlLower.includes('leetcode.com')) return 'fas fa-code';
+                      if (urlLower.includes('medium.com')) return 'fab fa-medium';
+                      if (urlLower.includes('twitter.com') || urlLower.includes('x.com')) return 'fab fa-twitter';
+                      if (urlLower.includes('facebook.com')) return 'fab fa-facebook';
+                      if (urlLower.includes('instagram.com')) return 'fab fa-instagram';
+                      if (urlLower.includes('youtube.com')) return 'fab fa-youtube';
+                      if (urlLower.includes('stackoverflow.com')) return 'fab fa-stack-overflow';
+                      if (urlLower.includes('codepen.io')) return 'fab fa-codepen';
+                      if (urlLower.includes('codechef.com')) return 'fas fa-code';
+                      if (urlLower.includes('codeforces.com')) return 'fas fa-code';
+                      if (urlLower.includes('hackerearth.com')) return 'fas fa-code';
+                      if (urlLower.includes('hackerrank.com')) return 'fas fa-code';
+                      return 'fas fa-globe';
+                    }
+                    
+                    // Helper function to get display text for the link
+                    function getDisplayText(url) {
+                      if (url.includes('linkedin.com')) return 'LinkedIn';
+                      if (url.includes('github.com')) return 'GitHub';
+                      if (url.includes('leetcode.com')) return 'LeetCode';
+                      
+                      try {
+                        const domain = new URL(url).hostname.replace('www.', '');
+                        return domain.split('.')[0].charAt(0).toUpperCase() + domain.split('.')[0].slice(1);
+                      } catch(e) {
+                        return 'Website';
+                      }
+                    }
+                    
+                    // Handle new format: links array (from uploaded resumes)
+                    if (data.updatedResume.personalInfo.links && 
+                        data.updatedResume.personalInfo.links.length > 0) {
+                      data.updatedResume.personalInfo.links.forEach(url => {
+                    %>
+                      <span>
+                        <i class="<%= getIconForUrl(url) %>"></i> 
+                        <a href="<%= url %>" target="_blank"><%= getDisplayText(url) %></a>
+                      </span>
+                    <% 
+                      });
+                    }
+                    
+                    // Backward compatibility: Handle old format individual properties
+                    if (data.updatedResume.personalInfo.linkedin) { %>
                         <span>
                             <i class="fab fa-linkedin"></i> 
                             <a href="<%= data.updatedResume.personalInfo.linkedin %>" target="_blank">LinkedIn</a>
