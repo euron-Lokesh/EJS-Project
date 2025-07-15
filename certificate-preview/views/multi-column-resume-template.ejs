@@ -471,6 +471,16 @@
     </style>
 </head>
 <body>
+    <%
+    function shouldRender(value) {
+        if (!value) return false;
+        const trimmedValue = value.replace(/\s/g, '');
+        if (trimmedValue === '' || trimmedValue === '/-/' || trimmedValue.toLowerCase() === 'n/a') {
+            return false;
+        }
+        return true;
+    }
+    %>
     <div class="container">
         <!-- Left Sidebar -->
         <div class="sidebar">
@@ -569,7 +579,10 @@
                     <div class="education-header">
                         <div class="institution-name"><%= edu.institution %></div>
                         <div class="degree-name"><%= edu.degree %></div>
-                        <div class="education-duration"><%= edu.duration %> | <%= edu.location %></div>
+                        <% const eduLine = [edu.duration, edu.location].filter(shouldRender).join(' | '); %>
+                        <% if (eduLine) { %>
+                        <div class="education-duration"><%= eduLine %></div>
+                        <% } %>
                     </div>
                     <% if (edu.details) { %>
                     <div class="education-details"><%= edu.details %></div>
@@ -585,9 +598,20 @@
                 <ul class="achievements-list">
                     <% data.updatedResume.achievements.forEach(achievement => { %>
                     <li class="achievement-item">
-                        <div class="achievement-name"><%= achievement.name %></div>
-                        <% if (achievement.date) { %>
-                        <div class="achievement-date"><%= achievement.date %></div>
+                        <% if (typeof achievement === 'object' && achievement !== null) { %>
+                            <div class="achievement-name">
+                                <%= achievement.name %>
+                                <% if (achievement.link) { %>
+                                    <a href="<%= achievement.link %>" target="_blank" style="text-decoration: none; margin-left: 5px; color: #0664a3;">
+                                        <i class="fas fa-link" style="font-size: 0.7em;"></i>
+                                    </a>
+                                <% } %>
+                            </div>
+                            <% if (shouldRender(achievement.date)) { %>
+                            <div class="achievement-date"><%= achievement.date %></div>
+                            <% } %>
+                        <% } else { %>
+                            <div class="achievement-name"><%= achievement %></div>
                         <% } %>
                     </li>
                     <% }) %>
@@ -611,8 +635,17 @@
                 <% data.updatedResume.experience.forEach(exp => { %>
                 <div class="experience-item">
                     <div class="experience-header">
-                        <div class="company-name"><%= exp.companyName %></div>
+                        <div class="company-name">
+                            <%= exp.companyName %>
+                            <% if (exp.link) { %>
+                                <a href="<%= exp.link %>" target="_blank" style="text-decoration: none; margin-left: 5px; color: #0664a3;">
+                                    <i class="fas fa-link" style="font-size: 0.7em;"></i>
+                                </a>
+                            <% } %>
+                        </div>
+                        <% if (shouldRender(exp.duration)) { %>
                         <div class="duration-location"><%= exp.duration %></div>
+                        <% } %>
                     </div>
                     <div class="job-position"><%= exp.designation %></div>
                     <ul class="experience-points">
@@ -632,8 +665,17 @@
                 <% data.updatedResume.projects.forEach(project => { %>
                 <div class="experience-item">
                     <div class="experience-header">
-                        <div class="company-name"><%= project.name %></div>
+                        <div class="company-name">
+                            <%= project.name %>
+                            <% if (project.link) { %>
+                                <a href="<%= project.link %>" target="_blank" style="text-decoration: none; margin-left: 5px; color: #0664a3;">
+                                    <i class="fas fa-link" style="font-size: 0.7em;"></i>
+                                </a>
+                            <% } %>
+                        </div>
+                        <% if (shouldRender(project.duration)) { %>
                         <div class="duration-location"><%= project.duration %></div>
+                        <% } %>
                     </div>
                     <ul class="experience-points">
                         <% project.description.forEach(desc => { %>
