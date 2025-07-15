@@ -209,6 +209,16 @@
     </style>
 </head>
 <body>
+    <%
+    function shouldRender(value) {
+        if (!value) return false;
+        const trimmedValue = value.replace(/\s/g, '');
+        if (trimmedValue === '' || trimmedValue === '/-/' || trimmedValue.toLowerCase() === 'n/a') {
+            return false;
+        }
+        return true;
+    }
+    %>
     <div class="container">
         <!-- Header Section -->
         <div class="header">
@@ -349,8 +359,15 @@
             <% data.updatedResume.experience.forEach(exp => { %>
                 <div class="experience-item">
                     <div class="company-header">
-                        <div><%= exp && exp.companyName ? exp.companyName : '' %></div>
-                        <% if (exp && exp.duration) { %>
+                        <div>
+                            <%= exp && exp.companyName ? exp.companyName : '' %>
+                            <% if (exp.link) { %>
+                                <a href="<%= exp.link %>" target="_blank" style="text-decoration: none; margin-left: 5px; color: #042236;">
+                                    <i class="fas fa-link" style="font-size: 0.7em;"></i>
+                                </a>
+                            <% } %>
+                        </div>
+                        <% if (shouldRender(exp.duration)) { %>
                             <div><%= exp.duration %></div>
                         <% } %>
                     </div>
@@ -374,8 +391,15 @@
             <% data.updatedResume.projects.forEach(project => { %>
                 <div class="project-item">
                     <div class="project-header">
-                        <span class="project-name"><%= project && project.name ? project.name : '' %></span>
-                        <% if (project && project.duration) { %>
+                        <span class="project-name">
+                            <%= project && project.name ? project.name : '' %>
+                            <% if (project.link) { %>
+                                <a href="<%= project.link %>" target="_blank" style="text-decoration: none; margin-left: 5px; color: #042236;">
+                                    <i class="fas fa-link" style="font-size: 0.7em;"></i>
+                                </a>
+                            <% } %>
+                        </span>
+                        <% if (shouldRender(project.duration)) { %>
                             <span><%= project.duration %></span>
                         <% } %>
                     </div>
@@ -397,9 +421,18 @@
                 <% data.updatedResume.achievements.forEach(achievement => { %>
                     <li>
                         <div class="achievement-item">
-                            <span class="achievement-name"><%= achievement.name %></span>
-                            <% if (achievement.date) { %>
-                                <span class="achievement-date"><%= achievement.date %></span>
+                            <% if (typeof achievement === 'object' && achievement !== null) { %>
+                                <span class="achievement-name"><%= achievement.name %></span>
+                                <% if (achievement.link) { %>
+                                    <a href="<%= achievement.link %>" target="_blank" style="text-decoration: none; margin-left: 5px; color: #042236;">
+                                        <i class="fas fa-link" style="font-size: 0.7em;"></i>
+                                    </a>
+                                <% } %>
+                                <% if (shouldRender(achievement.date)) { %>
+                                    <span class="achievement-date"><%= achievement.date %></span>
+                                <% } %>
+                            <% } else { %>
+                                <span class="achievement-name"><%= achievement %></span>
                             <% } %>
                         </div>
                     </li>
@@ -419,7 +452,7 @@
                         <div class="institution"><%= edu && edu.institution ? edu.institution : '' %></div>
                     </div>
                     <div class="duration-location">
-                        <% if (edu && edu.duration) { %>
+                        <% if (shouldRender(edu.duration)) { %>
                             <div class="duration"><%= edu.duration %></div>
                         <% } %>
                         <% if (edu && edu.location) { %>
