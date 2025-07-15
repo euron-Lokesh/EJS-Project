@@ -13,7 +13,7 @@ module.exports = {
     },
     summary: "Frontend Developer with 2.5 years of experience specializing in scalable web applications, reusable components, and performance optimization using React.js, Next.js, and React Native. Expertise in TypeScript, JavaScript, Tailwind CSS, and Material-UI, with a strong focus on responsive design and user experience. Proven ability to build AI-integrated interfaces, learning management systems, and cross-platform mobile apps, integrating RESTful APIs for seamless functionality.",
     skills: [
-      "React.js","Next.js","React Native","TypeScript","JavaScript","Tailwind CSS","Material-UI","Redux","Context API","Git","npm","Webpack","Babel"
+      "React.js","Next.js","React Native","TypeScript","JavaScript","Tailwind CSS","Material-UI","Redux","Context API","Git","npm","Webpack","Babel","AI Integration","Learning Management Systems","Cross-platform Mobile Apps","RESTful APIs","API Integration","API Development","API Testing","API Documentation","API Security","API Performance Optimization","API Monitoring","API Logging","API Error Handling","API Rate Limiting","API Caching","API Authentication","API Authorization","API Versioning","API Documentation","API Testing","API Security","API Performance Optimization","API Monitoring","API Logging","API Error Handling","API Rate Limiting","API Caching","API Authentication","API Authorization","API Versioning"
     ],
     experience: [
       {
