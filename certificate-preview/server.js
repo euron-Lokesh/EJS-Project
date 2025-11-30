@@ -53,6 +53,17 @@ app.get('/modern-resume', (req, res) => {
     res.render('modern-resume', { data: resumeData });
 });
 
+// Route to display professional resume template
+app.get('/professional-resume',(req, res) => {
+    res.render('professional-resume-template', { data: resumeData });
+});
+// Route to display professional resume template
+app.get('/anna-field-resume',(req, res) => {
+    res.render('anna-field-resume-template', { data: resumeData });
+});
+
+
+
 // Start server
 const PORT = 3001;
 app.listen(PORT, () => {
@@ -61,4 +72,8 @@ app.listen(PORT, () => {
     console.log(`- Resume Template 1: http://localhost:${PORT}/resume`);
     console.log(`- Resume Template 2: http://localhost:${PORT}/resume-2`);
     console.log(`- Cover Letter: http://localhost:${PORT}/cover-letter`);
+    console.log(`- Modern Resume: http://localhost:${PORT}/modern-resume`);
+    console.log(`- Professional Resume: http://localhost:${PORT}/professional-resume`);
+    console.log(`- Anna Field Resume: http://localhost:${PORT}/anna-field-resume`);
 });
+
