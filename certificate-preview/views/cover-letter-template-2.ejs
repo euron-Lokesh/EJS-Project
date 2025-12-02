@@ -176,8 +176,15 @@
                   }
                 }
                 %>
-                <span><i class="fas fa-envelope"></i> <%= data.coverLetter.personalInfo.email %></span>
-                <span><i class="fas fa-phone"></i> <%= data.coverLetter.personalInfo.phone %></span>
+                <% if (data.coverLetter.personalInfo.email) { %>
+                    <span><i class="fas fa-envelope"></i> <%= data.coverLetter.personalInfo.email %></span>
+                <% } %>
+                <% if (data.coverLetter.personalInfo.phone) { %>
+                    <span><i class="fas fa-phone"></i> <%= data.coverLetter.personalInfo.phone %></span>
+                <% } %>
+                <% if (data.coverLetter.personalInfo.address) { %>
+                    <span><i class="fas fa-map-marker-alt"></i> <%= data.coverLetter.personalInfo.address %></span>
+                <% } %>
                 
                 <% if (data.coverLetter.personalInfo.links && data.coverLetter.personalInfo.links.length > 0) { %>
                     <% data.coverLetter.personalInfo.links.forEach(link => { %>
@@ -192,7 +199,27 @@
 
         <!-- Date -->
         <div class="date">
-            <%= data.coverLetter.date %>
+            <% 
+            // Generate current date in a nice format
+            const currentDate = new Date();
+            
+            // Convert to ordinal format (1st, 2nd, 3rd, etc.)
+            function getOrdinalSuffix(day) {
+                if (day > 3 && day < 21) return 'th';
+                switch (day % 10) {
+                    case 1: return 'st';
+                    case 2: return 'nd';
+                    case 3: return 'rd';
+                    default: return 'th';
+                }
+            }
+            
+            const day = currentDate.getDate();
+            const month = currentDate.toLocaleDateString('en-US', { month: 'long' });
+            const year = currentDate.getFullYear();
+            const ordinalDate = `${day}${getOrdinalSuffix(day)} ${month}, ${year}`;
+            %>
+            <%= ordinalDate %>
         </div>
 
         <!-- Recipient Information -->
