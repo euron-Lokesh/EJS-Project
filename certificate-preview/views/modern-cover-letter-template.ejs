@@ -10,7 +10,7 @@
         /* A4 page setup */
         @page {
             size: A4;
-            margin: 15mm; /* Add margin to all sides of the page when printing */
+            margin: 0;
         }
         @media print {
             html, body {
@@ -21,7 +21,7 @@
             }
             .container {
                 width: 100%;
-                padding: 6mm; /* Add padding inside the container */
+                padding: 0;
                 margin: 0 auto;
                 box-shadow: none;
             }
@@ -31,95 +31,138 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Times New Roman', serif;
         }
+        
         body {
             background: #fff;
             color: #000;
-            line-height: 1.5; 
-            font-size: 12px; 
+            line-height: 1.6;
+            font-size: 12px;
+            font-family: Arial, sans-serif;
         }
+        
         .container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 20px; 
+            background: #fff;
         }
+        
+        /* Purple Header Section */
         .header {
+            background: linear-gradient(135deg, #8B4A9C, #A855A8);
+            color: white;
+            padding: 40px 30px;
             text-align: center;
-            margin-bottom: 25px; 
         }
+        
         .name {
-            font-size: 24px; 
-            font-weight: bold;
-            margin-bottom: 10px; 
-            color: #000; /* Changed from #003366 to black */
+            font-size: 36px;
+            font-weight: 300;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
         }
+        
+        .job-title {
+            font-size: 18px;
+            font-weight: 300;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+        }
+        
         .contact-info {
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-wrap: wrap; /* Allow wrapping if too many items */
-            font-size: 11px; 
-            margin: 10px 0 20px 0;
-            gap: 20px; /* Space between items */
+            flex-wrap: wrap;
+            font-size: 12px;
+            gap: 25px;
         }
+        
         .contact-info span {
             display: flex;
             align-items: center;
+            color: white;
         }
+        
         .contact-info i {
-            margin-right: 5px;
-            width: 14px; /* Fixed width for icons to align text */
+            margin-right: 8px;
+            width: 16px;
             text-align: center;
+            font-size: 14px;
         }
+        
         .contact-info a {
             text-decoration: none;
-            color: #000;
-            font-weight: 500;
+            color: white;
+            font-weight: 400;
         }
+        
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Content Section */
+        .content {
+            padding: 40px 30px;
+            background: #f8f8f8;
+        }
+        
         .date {
             text-align: right;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            font-size: 12px;
+            color: #666;
         }
+        
         .recipient {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            color: #333;
         }
+        
         .recipient-name {
             font-weight: bold;
+            margin-bottom: 3px;
         }
+        
         .salutation {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             font-weight: 500;
+            color: #333;
         }
+        
         .letter-body {
             text-align: justify;
-            margin-bottom: 20px;
-            line-height: 1.6;
+            margin-bottom: 25px;
+            line-height: 1.7;
+            color: #444;
         }
+        
         .paragraph {
-            margin-bottom: 15px;
-            text-indent: 30px;
+            margin-bottom: 18px;
+            text-indent: 0;
         }
+        
         .closing {
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            color: #333;
         }
+        
         .signature {
-            margin-top: 5px;
+            margin-top: 8px;
         }
+        
         .signature-name {
             font-weight: bold;
-        }
-        .job-title {
-            margin-top: 5px;
-            font-style: italic;
+            color: #333;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Header Section -->
+        <!-- Purple Header Section -->
         <div class="header">
             <div class="name"><%= data.coverLetter.personalInfo.name %></div>
+            <div class="job-title"><%= data.coverLetter.personalInfo.title %></div>
             <div class="contact-info">
                 <% 
                 // Helper function to determine the icon class based on URL
@@ -197,55 +240,78 @@
             </div>
         </div>
 
-        <!-- Date -->
-        <div class="date">
-            <% 
-            // Generate current date in a nice format
-            const currentDate = new Date();
-            
-            // Convert to ordinal format (1st, 2nd, 3rd, etc.)
-            function getOrdinalSuffix(day) {
-                if (day > 3 && day < 21) return 'th';
-                switch (day % 10) {
-                    case 1: return 'st';
-                    case 2: return 'nd';
-                    case 3: return 'rd';
-                    default: return 'th';
+        <!-- Content Section -->
+        <div class="content">
+            <!-- Date -->
+            <div class="date">
+                <% 
+                // Generate current date in a nice format
+                const currentDate = new Date();
+                const options = { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric'
+                };
+                const formattedDate = currentDate.toLocaleDateString('en-US', options);
+                
+                // Convert to ordinal format (1st, 2nd, 3rd, etc.)
+                function getOrdinalSuffix(day) {
+                    if (day > 3 && day < 21) return 'th';
+                    switch (day % 10) {
+                        case 1: return 'st';
+                        case 2: return 'nd';
+                        case 3: return 'rd';
+                        default: return 'th';
+                    }
                 }
-            }
-            
-            const day = currentDate.getDate();
-            const month = currentDate.toLocaleDateString('en-US', { month: 'long' });
-            const year = currentDate.getFullYear();
-            const ordinalDate = `${day}${getOrdinalSuffix(day)} ${month}, ${year}`;
-            %>
-            <%= ordinalDate %>
-        </div>
+                
+                const day = currentDate.getDate();
+                const month = currentDate.toLocaleDateString('en-US', { month: 'long' });
+                const year = currentDate.getFullYear();
+                const ordinalDate = `${day}${getOrdinalSuffix(day)} ${month}, ${year}`;
+                %>
+                <%= ordinalDate %>
+            </div>
 
-        <!-- Recipient Information -->
-        <div class="recipient">
-            <% if (data.coverLetter.recipient && data.coverLetter.recipient.title) { %>
-                <div><%= data.coverLetter.recipient.title %></div>
-            <% } %>
-        </div>
+            <!-- Recipient Information -->
+            <div class="recipient">
+                <% if (data.coverLetter.recipient && data.coverLetter.recipient.title) { %>
+                    <div class="recipient-name"><%= data.coverLetter.recipient.title %></div>
+                <% } %>
+                <% if (data.coverLetter.recipient && data.coverLetter.recipient.company) { %>
+                    <div><%= data.coverLetter.recipient.company %></div>
+                <% } %>
+                <% if (data.coverLetter.recipient && data.coverLetter.recipient.address) { %>
+                    <div><%= data.coverLetter.recipient.address %></div>
+                <% } %>
+            </div>
 
-        <!-- Letter Body -->
-        <div class="letter-body">
-            <% data.coverLetter.body.paragraphs.forEach(paragraph => { %>
-                <div class="paragraph"><%= paragraph %></div>
-            <% }) %>
-        </div>
+            <!-- Salutation -->
+            <div class="salutation">
+                <% if (data.coverLetter.salutation) { %>
+                    <%= data.coverLetter.salutation %>
+                <% } else { %>
+                    Dear Hiring Manager,
+                <% } %>
+            </div>
 
-        <!-- Closing -->
-        <div class="closing">
-            <%= data.coverLetter.closing %>,
-        </div>
+            <!-- Letter Body -->
+            <div class="letter-body">
+                <% data.coverLetter.body.paragraphs.forEach(paragraph => { %>
+                    <div class="paragraph"><%= paragraph %></div>
+                <% }) %>
+            </div>
 
-        <!-- Signature -->
-        <div class="signature">
-            <div class="signature-name"><%= data.coverLetter.personalInfo.name %></div>
-            <div class="job-title"><%= data.coverLetter.personalInfo.title %></div>
+            <!-- Closing -->
+            <div class="closing">
+                <%= data.coverLetter.closing %>,
+            </div>
+
+            <!-- Signature -->
+            <div class="signature">
+                <div class="signature-name"><%= data.coverLetter.personalInfo.name %></div>
+            </div>
         </div>
     </div>
 </body>
-</html> 
+</html>
